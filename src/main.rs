@@ -1,5 +1,3 @@
-// #![allow(unused, dead_code)]
-
 use crate::player::PlayerPlugin;
 use bevy::prelude::*;
 mod movable_system;

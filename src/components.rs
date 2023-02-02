@@ -12,3 +12,6 @@ pub struct Velocity {
 
 #[derive(Component)]
 pub struct Movable;
+
+#[derive(Component)]
+pub struct Bullet;
