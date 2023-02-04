@@ -1,6 +1,6 @@
 use crate::player::PlayerPlugin;
 use bevy::prelude::*;
-mod movable_system;
+mod global_systems;
 mod player;
 mod components;
 
@@ -12,7 +12,8 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugin(PlayerPlugin)
         .add_startup_system(setup)
-        .add_system(movable_system::movable_system)
+        .add_system(global_systems::movable_system)
+        .add_system(global_systems::despawn_outside)
         .run();
 }
 
