@@ -2,7 +2,6 @@ use super::components::{DespawnOutsideWindow, Movable, Speed, Velocity};
 use bevy::prelude::*;
 
 pub fn movable_system(
-    // mut commands: Commands,
     mut query: Query<(&Velocity, &mut Transform, &Movable, &Speed)>,
 ) {
     for (velocity, mut transform, _movable, speed) in query.iter_mut() {
