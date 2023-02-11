@@ -1,5 +1,7 @@
+use crate::components::{Bullet, Enemy};
+
 use super::components::{DespawnOutsideWindow, Movable, Speed, Velocity};
-use bevy::prelude::*;
+use bevy::{prelude::*, sprite::collide_aabb::collide};
 
 pub fn movable_system(
     mut query: Query<(&Velocity, &mut Transform, &Movable, &Speed)>,
@@ -24,4 +26,28 @@ pub fn despawn_outside(
             commands.entity(entity).despawn();
         }
     }
+}
+
+
+pub fn enemy_shot (
+    mut commands: Commands,
+    bullet_query: Query<(Entity, &Transform), With<Bullet>>,
+    enemy_query: Query<(Entity, &Transform), With<Enemy>>
+) {
+    for (bullet_entity, bullet_transform) in bullet_query.iter() {
+        for (enemy_entity, enemy_transform) in enemy_query.iter() {
+            let has_collided = collide(
+                bullet_transform.translation,
+                Vec2 { x: 10.0, y: 10.0 },
+                enemy_transform.translation,
+                Vec2 { x: 10.0, y: 10.0 }
+            );
+            if let Some(_) = has_collided {
+                commands.entity(enemy_entity).despawn();
+                commands.entity(bullet_entity).despawn();
+            }
+        }
+
+    }
+
 }

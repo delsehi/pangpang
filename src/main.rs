@@ -16,6 +16,7 @@ fn main() {
         .add_plugin(EnemyPlugin)
         .add_startup_system(setup)
         .add_system(global_systems::movable_system)
+        .add_system(global_systems::enemy_shot)
         .add_system(global_systems::despawn_outside)
         .run();
 }
