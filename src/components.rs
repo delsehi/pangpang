@@ -8,7 +8,7 @@ pub struct Enemy;
 
 #[derive(Component)]
 pub struct Score {
-    pub score: u32
+    pub score: i32
 }
 
 

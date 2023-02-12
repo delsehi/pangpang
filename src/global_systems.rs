@@ -1,4 +1,4 @@
-use crate::components::{Bullet, Enemy, Score};
+use crate::components::{Bullet, Enemy, Score, Player};
 
 use super::components::{DespawnOutsideWindow, Movable, Speed, Velocity};
 use bevy::{prelude::*, sprite::collide_aabb::collide};
@@ -28,6 +28,27 @@ pub fn despawn_outside(
     }
 }
 
+pub fn player_hit(
+    mut commands: Commands,
+    enemy_query: Query<(Entity, &Transform), With<Enemy>>,
+    player_query: Query<&Transform, With<Player>>,
+    mut score_query: Query<&mut Score>
+) {
+    for (enemy_entity, enemy_transform) in enemy_query.iter() {
+        let player_transform = player_query.get_single().unwrap();
+        let has_collided = collide(
+            enemy_transform.translation,
+            Vec2 {x: 10.0, y: 10.0},
+            player_transform.translation,
+            Vec2 {x: 10.0, y: 10.0}
+        );
+        if let Some(_) = has_collided {
+            commands.entity(enemy_entity).despawn();
+            score_query.get_single_mut().unwrap().score -= 1_i32;
+        }
+    }
+}
+
 
 pub fn enemy_shot (
     mut commands: Commands,
@@ -47,7 +68,7 @@ pub fn enemy_shot (
                 commands.entity(enemy_entity).despawn();
                 commands.entity(bullet_entity).despawn();
                 let mut score = score_query.get_single_mut().unwrap();
-                score.score += 1_u32;
+                score.score += 1_i32;
             }
         }
 

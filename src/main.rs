@@ -21,6 +21,7 @@ fn main() {
         .add_system(global_systems::movable_system)
         .add_system(global_systems::enemy_shot)
         .add_system(global_systems::despawn_outside)
+        .add_system(global_systems::player_hit)
         .run();
 }
 
