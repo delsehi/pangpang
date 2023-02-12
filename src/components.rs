@@ -6,6 +6,11 @@ pub struct Player;
 #[derive(Component)]
 pub struct Enemy;
 
+#[derive(Component)]
+pub struct Score {
+    pub score: u32
+}
+
 
 #[derive(Component)]
 pub struct Velocity {

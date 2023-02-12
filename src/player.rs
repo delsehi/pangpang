@@ -26,6 +26,7 @@ fn spawn_player(mut commands: Commands, asset_server: Res<AssetServer>) {
         .insert(Movable)
         .insert(Speed { speed: 5.0 })
         .insert(Direction { x: 1.0, y: 0.0 })
+        // .insert(Score(0))
         .insert(Velocity { x: 0.0, y: 0.0 });
 }
 

@@ -1,8 +1,10 @@
 use crate::player::PlayerPlugin;
 use crate::enemy::EnemyPlugin;
+use crate::score::ScorePlugin;
 use bevy::prelude::*;
 mod global_systems;
 mod player;
+mod score;
 mod components;
 mod enemy;
 
@@ -14,6 +16,7 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugin(PlayerPlugin)
         .add_plugin(EnemyPlugin)
+        .add_plugin(ScorePlugin)
         .add_startup_system(setup)
         .add_system(global_systems::movable_system)
         .add_system(global_systems::enemy_shot)
