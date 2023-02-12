@@ -13,7 +13,13 @@ fn main() {
 
     App::new()
         .insert_resource(ClearColor(Color::BLUE))
-        .add_plugins(DefaultPlugins)
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            window: WindowDescriptor {
+                title: String::from("Pang pang"),
+                ..Default::default()
+            },
+            ..Default::default()
+        }))
         .add_plugin(PlayerPlugin)
         .add_plugin(EnemyPlugin)
         .add_plugin(ScorePlugin)
