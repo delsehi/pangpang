@@ -1,11 +1,12 @@
 use bevy::prelude::*;
+use rand::thread_rng;
 use std::time::Duration;
 use crate::components::Movable;
 use crate::components::Enemy;
 use crate::components::Player;
 use crate::components::Speed;
 use crate::components::Velocity;
-
+use rand::prelude::Rng;
 
 fn spawn_enemies(
     mut commands: Commands, 
@@ -15,17 +16,21 @@ fn spawn_enemies(
     ) {
     timer.timer.tick(time.delta());
     if timer.timer.finished() {
+        let mut rng = thread_rng();
+        let random_time: f32 = rng.gen_range(4f32..10f32);
+        let random_x = rng.gen_range(-5000f32..5000f32);
+        let random_y = rng.gen_range(-5000f32..5000f32);
         commands.spawn(SpriteBundle {
             texture: asset_server.load("key.png"),
             transform: Transform{
-                translation: Vec3::new(-50.0, 10.0, 2.0),
+                translation: Vec3::new(random_x, random_y, 2.0),
                 ..Default::default()
             },
             ..Default::default()                                                                                                                                           
         })
         .insert(Enemy)
         .insert(Velocity {x: 1.0, y: 0.0})
-        .insert(Speed { speed: 5.0})
+        .insert(Speed { speed: random_time})
         .insert(Movable);
     
     }
@@ -65,7 +70,7 @@ impl Plugin for EnemyPlugin {
         app.add_system(spawn_enemies)
         .add_system(follow_player)
         .insert_resource(EnemyTimer {
-            timer: Timer::new(Duration::from_secs(5), TimerMode::Repeating)
+            timer: Timer::new(Duration::from_secs(2), TimerMode::Repeating)
         });
     }
 }
